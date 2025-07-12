@@ -1,6 +1,5 @@
 package com.cypherlabs.cypherdigitaltwin.modeling.scope.domain;
 
-import de.huxhorn.sulky.ulid.ULID;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import java.util.*;
@@ -16,7 +15,8 @@ public class Scope {
     @Column(nullable = false)
     private String name;
 
-    private String location;
+    @Convert(converter = LocationConverter.class)
+    private Location location;
 
     @ElementCollection
     @CollectionTable(name = "scope_tags", joinColumns = @JoinColumn(name = "scope_id"))
@@ -34,7 +34,7 @@ public class Scope {
     protected Scope() {
     }
 
-    public Scope(String id, String name, String location, Set<String> tags, Scope parent) {
+    public Scope(String id, String name, Location location, Set<String> tags, Scope parent) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -46,7 +46,7 @@ public class Scope {
 
     public String getName() { return name; }
 
-    public String getLocation() { return location; }
+    public Location getLocation() { return location; }
 
     public Set<String> getTags() { return tags; }
 

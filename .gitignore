@@ -32,6 +32,7 @@ build/
 .vscode/
 
 .env*
+docker-compose.yml
 
 .mvn/*
 !.mvn/wrapper/maven-wrapper.jar
