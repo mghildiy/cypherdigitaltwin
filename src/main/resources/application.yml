@@ -15,3 +15,8 @@ spring:
     show-sql: true
     open-in-view: false
 
+  security:
+    user:
+      name: admin
+      password: secret
+

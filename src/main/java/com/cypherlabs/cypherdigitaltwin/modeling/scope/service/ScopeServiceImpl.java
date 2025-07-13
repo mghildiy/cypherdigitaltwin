@@ -1,5 +1,6 @@
 package com.cypherlabs.cypherdigitaltwin.modeling.scope.service;
 
+import com.cypherlabs.cypherdigitaltwin.modeling.scope.api.exception.ScopeWithSameNameExistsException;
 import com.cypherlabs.cypherdigitaltwin.modeling.scope.domain.Location;
 import com.cypherlabs.cypherdigitaltwin.modeling.scope.domain.Scope;
 import com.cypherlabs.cypherdigitaltwin.modeling.scope.api.exception.ScopeNotFoundException;
@@ -32,9 +33,15 @@ public class ScopeServiceImpl implements  ScopeService {
         if(!StringUtils.isBlank(parentId)) {
             parent = this.repository
                     .findById(parentId)
-                    .orElseThrow(() -> new ScopeNotFoundException("Parent scope not found: "+ parentId));
+                    .orElseThrow(() -> new ScopeNotFoundException(String.format("Parent scope '%s' not found", parentId)));
         }
+
+        if(this.repository.existsByName(name)) {
+            throw new ScopeWithSameNameExistsException(String.format("Scope with name '%s' already exists", name));
+        }
+
         Scope scope = new Scope(ulid.nextULID(), name, location, tags, parent);
+
 
         return this.repository.save(scope);
     }

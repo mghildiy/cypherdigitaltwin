@@ -12,7 +12,7 @@ public class Scope {
     @Column(length = 26, updatable = false, nullable = false)
     private String id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Convert(converter = LocationConverter.class)

@@ -1,16 +1,16 @@
 package com.cypherlabs.cypherdigitaltwin.modeling.scope.api;
 
-import com.cypherlabs.cypherdigitaltwin.modeling.scope.api.dto.CreateScopeRequest;
-import com.cypherlabs.cypherdigitaltwin.modeling.scope.api.dto.CreateScopeResponse;
-import com.cypherlabs.cypherdigitaltwin.modeling.scope.api.dto.GetScopeResponse;
+import com.cypherlabs.cypherdigitaltwin.modeling.scope.api.dto.*;
 import com.cypherlabs.cypherdigitaltwin.modeling.scope.domain.Scope;
 import com.cypherlabs.cypherdigitaltwin.modeling.scope.service.ScopeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/scope")
@@ -24,7 +24,7 @@ public class ScopeController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateScopeResponse> create(@RequestBody CreateScopeRequest request) {
+    public ResponseEntity<CreateScopeResponse> create(@Valid @RequestBody CreateScopeRequest request) {
         Scope created = this.service.create(request.name(),
                 request.location(), request.tags(), request.parentId());
 
@@ -36,10 +36,12 @@ public class ScopeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetScopeResponse> get(@PathVariable String id) {
+    public ResponseEntity<ScopeResponse> get(@PathVariable String id) {
         return service.get(id)
-                .map(found -> ResponseEntity.ok(toGetResponse(found)))
-                .orElse(ResponseEntity.notFound().build());
+                .<ResponseEntity<ScopeResponse>>map(found ->
+                        ResponseEntity.ok(toGetResponse(found)))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new ScopeNotFoundResponse("Scope not found", id)));
     }
 
     private GetScopeResponse toGetResponse(Scope scope) {
@@ -49,11 +51,10 @@ public class ScopeController {
 
     @GetMapping
     public ResponseEntity<List<GetScopeResponse>> getAll() {
-        List<Scope> existingScopes = this.service.getAll();
-        if (existingScopes.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(existingScopes.stream().map(this::toGetResponse).toList());
-        }
+        List<GetScopeResponse> responses = service.getAll()
+                .stream()
+                .map(this::toGetResponse)
+                .toList();
+        return ResponseEntity.ok(responses); // returns [] if empty
     }
 }

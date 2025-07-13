@@ -14,4 +14,10 @@ public class ScopeExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(ex.getMessage(), "SCOPE_NOT_FOUND"));
     }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> scopeWithSameNameExists(ScopeWithSameNameExistsException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(ex.getMessage(), "SCOPE_WITH_SAME_NAME_EXISTS"));
+    }
 }
