@@ -2,6 +2,7 @@ package com.cypherlabs.cypherdigitaltwin.modeling.scope.service;
 
 import com.cypherlabs.cypherdigitaltwin.modeling.scope.domain.Location;
 import com.cypherlabs.cypherdigitaltwin.modeling.scope.domain.Scope;
+import com.cypherlabs.cypherdigitaltwin.modeling.scope.api.exception.ScopeNotFoundException;
 import com.cypherlabs.cypherdigitaltwin.modeling.scope.repository.ScopeRepository;
 import de.huxhorn.sulky.ulid.ULID;
 import org.apache.commons.lang3.StringUtils;
@@ -26,24 +27,25 @@ public class ScopeServiceImpl implements  ScopeService {
 
     @Override
     @Transactional
-    public void create(String name, Location location, Set<String> tags, String parentId) {
+    public Scope create(String name, Location location, Set<String> tags, String parentId) {
         Scope parent  = null;
         if(!StringUtils.isBlank(parentId)) {
             parent = this.repository
                     .findById(parentId)
-                    .orElseThrow(() -> new IllegalStateException("Parent scope not found:"+ parentId));
+                    .orElseThrow(() -> new ScopeNotFoundException("Parent scope not found: "+ parentId));
         }
         Scope scope = new Scope(ulid.nextULID(), name, location, tags, parent);
-        this.repository.save(scope);
+
+        return this.repository.save(scope);
     }
 
     @Override
     public Optional<Scope> get(String id) {
-        return Optional.empty();
+        return this.repository.findById(id);
     }
 
     @Override
     public List<Scope> getAll() {
-        return List.of();
+        return this.repository.findAll();
     }
 }

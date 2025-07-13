@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface ScopeService {
 
-    void create(String name, Location location, Set<String> tags, String parent);
+    Scope create(String name, Location location, Set<String> tags, String parent);
     Optional<Scope> get(String id);
     List<Scope> getAll();
 }
