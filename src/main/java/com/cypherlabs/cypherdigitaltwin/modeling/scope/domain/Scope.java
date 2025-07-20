@@ -25,7 +25,7 @@ public class Scope {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ScopeStatus status = ScopeStatus.DRAFT;
+    private ScopeStatus status = ScopeStatus.ACTIVE;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_scope_id")

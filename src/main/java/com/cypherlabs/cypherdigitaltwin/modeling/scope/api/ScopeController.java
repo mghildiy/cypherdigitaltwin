@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/scope")
@@ -45,7 +44,7 @@ public class ScopeController {
     }
 
     private GetScopeResponse toGetResponse(Scope scope) {
-        return new GetScopeResponse(scope.getId(), scope.getName(), scope.getStatus(),
+        return new GetScopeResponse(scope.getId(), scope.getName(), scope.getStatus(), scope.getLocation(),
                 scope.getTags(), scope.getParent());
     }
 
