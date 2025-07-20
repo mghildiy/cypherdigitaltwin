@@ -1,6 +1,6 @@
 package com.cypherlabs.cypherdigitaltwin.modeling.scope.api.unit;
 
-import com.cypherlabs.cypherdigitaltwin.common.BaseTestTemplate;
+import com.cypherlabs.cypherdigitaltwin.common.BaseUnitTestTemplate;
 import com.cypherlabs.cypherdigitaltwin.modeling.scope.api.ScopeController;
 import com.cypherlabs.cypherdigitaltwin.modeling.scope.api.dto.CreateScopeRequest;
 import com.cypherlabs.cypherdigitaltwin.modeling.scope.api.exception.ScopeNotFoundException;
@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ScopeController_Create_ParentNotFoundError_Test extends BaseTestTemplate {
+public class ScopeController_Create_ParentNotFoundError_Test extends BaseUnitTestTemplate {
 
     private CreateScopeRequest request;
     private Object response;

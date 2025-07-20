@@ -1,6 +1,6 @@
 package com.cypherlabs.cypherdigitaltwin.modeling.scope.api.unit;
 
-import com.cypherlabs.cypherdigitaltwin.common.BaseTestTemplate;
+import com.cypherlabs.cypherdigitaltwin.common.BaseUnitTestTemplate;
 import com.cypherlabs.cypherdigitaltwin.modeling.scope.api.ScopeController;
 import com.cypherlabs.cypherdigitaltwin.modeling.scope.api.dto.GetScopeResponse;
 import com.cypherlabs.cypherdigitaltwin.modeling.scope.domain.Location;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ScopeController_GetAll_Found_Test extends BaseTestTemplate {
+public class ScopeController_GetAll_Found_Test extends BaseUnitTestTemplate {
 
     private ScopeService mockService;
     private Scope dummyScope;

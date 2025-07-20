@@ -2,7 +2,7 @@ package com.cypherlabs.cypherdigitaltwin.common;
 
 import org.junit.jupiter.api.Test;
 
-public abstract class BaseTestTemplate {
+public abstract class BaseUnitTestTemplate {
 
     @Test
     public final void run() {
