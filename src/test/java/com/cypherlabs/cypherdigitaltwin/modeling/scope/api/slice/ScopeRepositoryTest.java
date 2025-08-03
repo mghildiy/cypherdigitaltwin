@@ -13,7 +13,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-public class ScopeRepositoryTest {
+public class ScopeRepositoryTest extends BaseSliceTest{
 
     @Autowired
     ScopeRepository repository;
